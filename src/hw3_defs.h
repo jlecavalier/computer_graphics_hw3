@@ -30,6 +30,9 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 	        double cam_x,double cam_z,
 	        float fx, float fy, float fz,
 	        float rx, float ry, float rz);
+unsigned int LoadTexBMP(const char* file);
+void ErrCheck(const char* where);
+void Fatal(const char* format , ...);
 
 // OBJECTS
 void cube(double x,double y,double z,

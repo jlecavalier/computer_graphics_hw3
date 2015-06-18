@@ -7,7 +7,7 @@ all: $(EXE)
 # Variables for readability
 AUX=src/auxiliary/
 OBJ=src/objects/
-AUXLIB=$(AUX)print.o $(AUX)project.o $(AUX)params.o
+AUXLIB=$(AUX)print.o $(AUX)project.o $(AUX)params.o $(AUX)loadtexbmp.o $(AUX)errcheck.o $(AUX)fatal.o
 OBJLIB=$(OBJ)cube.o $(OBJ)axes.o $(OBJ)plane.o $(OBJ)grass_blade.o $(OBJ)grass_block.o $(OBJ)fencepost.o $(OBJ)fence.o $(OBJ)moon.o
 
 #  MinGW
@@ -34,6 +34,9 @@ src/hw3.o: src/hw3.c src/hw3_defs.h
 src/auxiliary/print.o: $(AUX)print.c src/hw3_defs.h
 src/auxiliary/project.o: $(AUX)project.c src/hw3_defs.h
 src/auxiliary/params.o: $(AUX)params.c src/hw3_defs.h
+src/auxiliary/loadtexbmp.o: $(AUX)loadtexbmp.c src/hw3_defs.h
+src/auxiliary/errcheck.o: $(AUX)errcheck.c src/hw3_defs.h
+src/auxiliary/fatal.o: $(AUX)fatal.c src/hw3_defs.h
 src/objects/cube.o: $(OBJ)cube.c src/hw3_defs.h
 src/objects/axes.o: $(OBJ)axes.c src/hw3_defs.h
 src/objects/plane.o: $(OBJ)plane.c src/hw3_defs.h
