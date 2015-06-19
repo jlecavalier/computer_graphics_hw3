@@ -18,9 +18,15 @@ double lookat_x=0; // where is the camera pointing?
 double lookat_y=0;
 double lookat_z=0;
 
+// Animation stuff
+double moon_zh=0;
+
 // For the grass blades
 double dx_mat[7][7];
 double th_mat[7][7];
+
+// texture names
+unsigned int texture[2];
 
 void display() {
   glClearColor(4.0/255.0,12.0/255.0,31.0/255.0,1);
@@ -64,17 +70,19 @@ void display() {
     }
   }
 
-  // Fence at origin, no rotation.
+  // Fences around the whole yard.
   double k;
-  for (k=-8;k<=8;k+=.5) {
-    fence(k,0,-7,0);
-    fence(-7,0,k,90);
-    fence(k,0,7,0);
-    fence(7,0,k,90);
+  for (k=-7;k<=7;k+=.5) {
+    fence(k,0,-7,0,texture[1]);
+    fence(-7,0,k,90,texture[1]);
+    fence(k,0,7,0,texture[1]);
+    fence(7,0,k,90,texture[1]);
   }
 
   // The moon!
-  moon(6,6,6,.5,110,90,0);
+  moon(12,12,12,2,
+       0,moon_zh,0,
+       texture[0]);
 
   // Display axes and params in debug mode
   if(debug) {
@@ -197,6 +205,14 @@ void passive_mouse(int x, int y) {
   glutPostRedisplay();
 }
 
+void idle() {
+  moon_zh = 3*glutGet(GLUT_ELAPSED_TIME)/1000.0;
+  if (moon_zh > 360) {
+    moon_zh = 0;
+  }
+  glutPostRedisplay();
+}
+
 /*
   Start up GLUT and tell it what to do
 */
@@ -227,7 +243,12 @@ int main(int argc, char* argv[]) {
   glutSpecialFunc(special);
   glutPassiveMotionFunc(passive_mouse);
   glutMotionFunc(passive_mouse);
+  glutIdleFunc(idle);
+  // Load textures
+  texture[0] = LoadTexBMP("./src/textures/moon.bmp");
+  texture[1] = LoadTexBMP("./src/textures/whitewash.bmp");
   // Pass control to GLUT so it can interact with the user
+  ErrCheck("init");
   glutMainLoop();
   return 0;
 }

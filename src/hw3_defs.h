@@ -33,6 +33,7 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 unsigned int LoadTexBMP(const char* file);
 void ErrCheck(const char* where);
 void Fatal(const char* format , ...);
+void Vertex(int th,int ph);
 
 // OBJECTS
 void cube(double x,double y,double z,
@@ -50,9 +51,10 @@ void grass_block(double x,double y,double z,
 	             double dx_mat[7][7],double th_mat[7][7]);
 void fencepost(double x,double y,double z,
 	           double dx,double dy,double dz);
-void fence(double x,double y,double z,double th);
+void fence(double x,double y,double z,double th,unsigned int tex);
 void moon(double x,double y,double z,double r,
-	      double thx,double thy,double thz);
+	      double thx,double thy,double thz,
+	      unsigned int tex);
 
 #ifdef __cplusplus
 }
