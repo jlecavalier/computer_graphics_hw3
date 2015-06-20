@@ -14,7 +14,7 @@ void Project(int fov,double asp,double dim, int mode) {
   glLoadIdentity();
   // Perspective transformation
   if (mode) {
-    gluPerspective(fov,asp,dim/4,4*dim);
+    gluPerspective(fov,asp,dim/4,8*dim);
   }
   else {
     // bottom/top -dim/+dim

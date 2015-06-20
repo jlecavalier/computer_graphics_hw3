@@ -26,7 +26,7 @@ double dx_mat[7][7];
 double th_mat[7][7];
 
 // texture names
-unsigned int texture[2];
+unsigned int texture[4];
 
 void display() {
   glClearColor(4.0/255.0,12.0/255.0,31.0/255.0,1);
@@ -59,14 +59,15 @@ void display() {
   plane(0,0,5, 
         47.0/255.0,99.0/255.0,56.0/255.0,
         16, 
-        0,0,0);
+        0,0,0,
+        texture[2]);
 
   // Blocks of grass!
   int i;
   int j;
   for (i=-7;i<=7;i++) {
     for (j=-7;j<=7;j++) {
-      grass_block(i,0,j,dx_mat,th_mat);
+      grass_block(i,0,j,dx_mat,th_mat,texture[3]);
     }
   }
 
@@ -207,9 +208,6 @@ void passive_mouse(int x, int y) {
 
 void idle() {
   moon_zh = 3*glutGet(GLUT_ELAPSED_TIME)/1000.0;
-  if (moon_zh > 360) {
-    moon_zh = 0;
-  }
   glutPostRedisplay();
 }
 
@@ -247,6 +245,8 @@ int main(int argc, char* argv[]) {
   // Load textures
   texture[0] = LoadTexBMP("./src/textures/moon.bmp");
   texture[1] = LoadTexBMP("./src/textures/whitewash.bmp");
+  texture[2] = LoadTexBMP("./src/textures/grass.bmp");
+  texture[3] = LoadTexBMP("./src/textures/grass_blade.bmp");
   // Pass control to GLUT so it can interact with the user
   ErrCheck("init");
   glutMainLoop();
