@@ -29,10 +29,10 @@ double th_mat[7][7];
 unsigned int texture[5];
 
 // Lighting stuff
-double ambient=65;
-double diffuse=60;
-double specular=-5;
-double moon_emission=15;
+double ambient=55;
+double diffuse=-65;
+double specular=6.75;
+double moon_emission=55;
 float moon_shininess = 1.25;
 float moon_shinyvec[1];
 
@@ -63,7 +63,9 @@ void display() {
   }
 
   // Lighting!
-  lighting(ambient,diffuse,specular);
+  lighting(ambient,diffuse,specular,
+           moon_zh, texture[0],
+           moon_emission,moon_shinyvec);
 
   // A grassy plane
   plane(0,0,5, 
@@ -84,26 +86,26 @@ void display() {
   // Fences around the whole yard.
   double k;
   for (k=-7;k<=7;k+=.5) {
-    fence(k,0,-7,0,texture[1]);
-    fence(-7,0,k,90,texture[1]);
-    fence(k,0,7,0,texture[1]);
-    fence(7,0,k,90,texture[1]);
+    fence(k,0,-7,180,texture[1]);
+    fence(-7,0,k,-90,texture[1]);
+    fence(k,0,7,180,texture[1]);
+    fence(7,0,k,-90,texture[1]);
   }
 
   // The moon!
+  /*
   moon(12,12,12,2,
        0,moon_zh,0,
        texture[0],
        moon_emission,moon_shinyvec);
+       */
 
   glDisable(GL_LIGHTING);
 
-  // The sky! Not working yet...
-  /*
-  sky(0,0,0,14,
-    0,0,0,
+  // The sky!
+  sky(0,0,0,20,
+    -90,0,0,
     texture[4]);
-    */
 
   // Display axes and params in debug mode
   if(debug) {

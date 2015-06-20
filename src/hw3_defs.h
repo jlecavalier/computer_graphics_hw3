@@ -36,7 +36,9 @@ unsigned int LoadTexBMP(const char* file);
 void ErrCheck(const char* where);
 void Fatal(const char* format , ...);
 void Vertex(int th,int ph,int out);
-void lighting(float ambient,float diffuse,float specular);
+void lighting(float ambient,float diffuse,float specular,
+	          double moon_zh,unsigned int tex,
+	          double moon_emission,float moon_shinyvec[1]);
 
 // OBJECTS
 void cube(double x,double y,double z,

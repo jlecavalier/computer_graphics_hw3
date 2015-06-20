@@ -1,14 +1,21 @@
 #include "../hw3_defs.h"
 
-void lighting(float ambient,float diffuse,float specular) {
+void lighting(float ambient,float diffuse,float specular,
+	          double moon_zh,unsigned int tex,
+	          double moon_emission,float moon_shinyvec[1]) {
   glEnable(GL_NORMALIZE);
 
   // Translate intensity to color vectors
-  float Ambient[] = {0.01*ambient ,0.01*ambient ,0.01*ambient ,1.0};
-  float Diffuse[] = {0.01*diffuse ,0.01*diffuse ,0.01*diffuse ,1.0};
-  float Specular[] = {0.01*specular ,0.01*specular ,0.01*specular ,1.0};
+  float Ambient[] = {0.01*ambient ,0.01*ambient ,0.01*ambient};
+  float Diffuse[] = {0.01*diffuse ,0.01*diffuse ,0.01*diffuse};
+  float Specular[] = {0.01*specular ,0.01*specular ,0.01*specular};
   // Light direction
-  float Position[] = {11,11,11};
+  float Position[] = {12,12,12};
+  // The moon is the light source
+  moon(12,12,12,1.5,
+       0,moon_zh,0,
+       tex,
+       moon_emission,moon_shinyvec);
   // OpenGL should normalize normal vectors
   glEnable(GL_NORMALIZE);
   // Enable lighting

@@ -6,6 +6,10 @@ void sky(double x,double y,double z,double r,
   const int d=5;
   int th,ph;
 
+  // Material of the sky
+  float Diffuse[] = {.05,.05,.5};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
+
   // Save transformation
   glPushMatrix();
   // Offset
@@ -20,12 +24,18 @@ void sky(double x,double y,double z,double r,
   glBindTexture(GL_TEXTURE_2D,tex);
 
   // Latitude bands
-  for (ph=-90;ph<90;ph+=d) {
+  for (ph=0;ph<90;ph+=d) {
   	glColor3f(1,1,1);
   	glBegin(GL_QUAD_STRIP);
   	for (th=0;th<=360;th+=d) {
   		Vertex(th,ph,0);
   		Vertex(th,ph+5,0);
   	}
+  	glEnd();
   }
+
+  // Undo transformations
+  glPopMatrix();
+  // We don't wand the sky to appear on anything else!
+  glDisable(GL_TEXTURE_2D);
 }

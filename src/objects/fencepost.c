@@ -2,11 +2,11 @@
 
 void fencepost(double x,double y,double z,
 	           double dx,double dy,double dz) {
-  // Set specular color to white
+  // Fence materials
   float white[] = {1.0,1.0,1.0,1.0};
-  float Emission[] = {0.0,0.0,0.01*-20,1.0};
+  float Diffuse[] = {1.0,1.0,0.0};
   glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
-  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
   // Save transformation
   glPushMatrix();
   // Offset
