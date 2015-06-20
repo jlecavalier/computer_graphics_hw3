@@ -2,9 +2,17 @@
 
 void moon(double x,double y,double z,double r,
 	      double thx,double thy,double thz,
-        unsigned int tex) {
+        unsigned int tex,
+        double moon_emission, float moon_shinyvec[1]) {
   const int d=5;
   int th,ph;
+
+  // Set specular color to white
+  float white[] = {.78,.78,.78,1};
+  float Emission[] = {0.0,0.0,0.01*moon_emission,1.0};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,moon_shinyvec);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
 
   // Save transformation
   glPushMatrix();
@@ -24,8 +32,8 @@ void moon(double x,double y,double z,double r,
     glColor3f(1,1,1);
   	glBegin(GL_QUAD_STRIP);
   	for (th=0;th<=360;th+=d) {
-  	  Vertex(th,ph);
-  	  Vertex(th,ph+5);
+  	  Vertex(th,ph,1);
+  	  Vertex(th,ph+5,1);
   	}
   	glEnd();
   }

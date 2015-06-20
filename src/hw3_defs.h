@@ -29,11 +29,14 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 	        double lookat_x,double lookat_y,double lookat_z,
 	        double cam_x,double cam_z,
 	        float fx, float fy, float fz,
-	        float rx, float ry, float rz);
+	        float rx, float ry, float rz,
+	        double ambient,double diffuse,double specular,
+	        double moon_emission,float moon_shininess);
 unsigned int LoadTexBMP(const char* file);
 void ErrCheck(const char* where);
 void Fatal(const char* format , ...);
-void Vertex(int th,int ph);
+void Vertex(int th,int ph,int out);
+void lighting(float ambient,float diffuse,float specular);
 
 // OBJECTS
 void cube(double x,double y,double z,
@@ -57,7 +60,11 @@ void fencepost(double x,double y,double z,
 void fence(double x,double y,double z,double th,unsigned int tex);
 void moon(double x,double y,double z,double r,
 	      double thx,double thy,double thz,
-	      unsigned int tex);
+	      unsigned int tex,
+	      double moon_emission,float moon_shinyvec[1]);
+void sky(double x,double y,double z,double r,
+	     double thx,double thy,double thz,
+	     unsigned int tex);
 
 #ifdef __cplusplus
 }

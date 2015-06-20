@@ -4,7 +4,9 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 	        double lookat_x,double lookat_y,double lookat_z,
 	        double cam_x,double cam_z,
 	        float fx, float fy, float fz,
-	        float rx, float ry, float rz) {
+	        float rx, float ry, float rz,
+	        double ambient,double diffuse,double specular,
+	        double moon_emission,float moon_shininess) {
   glColor3f(1,1,1);
   if (!mode) {
   	glColor3f(0,0,0);
@@ -26,5 +28,9 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
     Print("Forward Vector=<%.2f, %.2f, %.2f>",fx,fy,fz);
 	glWindowPos2i(5,95);
 	Print("Right Vector=<%.2f, %.2f, %.2f>",rx,ry,rz);
+	glWindowPos2i(5,110);
+	Print("Lighting:%.0f, %.0f, %.0f",ambient,diffuse,specular);
+	glWindowPos2i(5,125);
+	Print("Moon emission, shininess:%.0f, %.0f",moon_emission,moon_shininess);
   }
 }

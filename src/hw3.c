@@ -26,7 +26,15 @@ double dx_mat[7][7];
 double th_mat[7][7];
 
 // texture names
-unsigned int texture[4];
+unsigned int texture[5];
+
+// Lighting stuff
+double ambient=65;
+double diffuse=60;
+double specular=-5;
+double moon_emission=15;
+float moon_shininess = 1.25;
+float moon_shinyvec[1];
 
 void display() {
   glClearColor(4.0/255.0,12.0/255.0,31.0/255.0,1);
@@ -52,8 +60,10 @@ void display() {
     glRotatef(ph,1,0,0);
     glRotatef(th,0,1,0);
     glScaled(1,1,1);
-    //glScaled(1.0/10.0,1.0/10.0,1.0/10.0);
   }
+
+  // Lighting!
+  lighting(ambient,diffuse,specular);
 
   // A grassy plane
   plane(0,0,5, 
@@ -83,7 +93,17 @@ void display() {
   // The moon!
   moon(12,12,12,2,
        0,moon_zh,0,
-       texture[0]);
+       texture[0],
+       moon_emission,moon_shinyvec);
+
+  glDisable(GL_LIGHTING);
+
+  // The sky! Not working yet...
+  /*
+  sky(0,0,0,14,
+    0,0,0,
+    texture[4]);
+    */
 
   // Display axes and params in debug mode
   if(debug) {
@@ -94,7 +114,9 @@ void display() {
            lookat_x,lookat_y,lookat_z,
            cam_x,cam_z,
            mat[2],mat[6],mat[10],
-           mat[0],mat[4],mat[8]);
+           mat[0],mat[4],mat[8],
+           ambient,diffuse,specular,
+           moon_emission,moon_shininess);
   }
 
   glFlush();
@@ -133,6 +155,44 @@ void key(unsigned char ch,int x,int y) {
     cam_x += (mat[0])/2.0;
     cam_z += (mat[8])/2.0;
   }
+  else if (ch == 'y') {
+    ambient -= 5;
+  }
+  else if (ch == 'u') {
+    ambient += 5;
+  }
+  else if (ch == 'h') {
+    diffuse -= 5;
+  }
+  else if (ch == 'j') {
+    diffuse += 5;
+  }
+  else if (ch == 'b') {
+    specular -= 5;
+  }
+  else if (ch == 'n') {
+    specular += 5;
+  }
+  else if (ch == '[') {
+    moon_emission -= 5;
+  }
+  else if (ch == ']') {
+    moon_emission += 5;
+  }
+  else if (ch == '{') {
+    moon_shininess -= 1;
+  }
+  else if (ch == '}') {
+    moon_shininess += 1;
+  }
+
+  // Translate shininess power to value
+  moon_shinyvec[0] = moon_shininess<0 ? 0 : pow(2.0,moon_shininess);
+
+
+  // Keep light bounded
+  if (ambient > 100) {ambient = 100;}
+  if (ambient < 0) {ambient = 0;}
   
   // Don't let the user walk through the fence!
   if (cam_x < -5.3) {cam_x = -5.3;}
@@ -247,6 +307,7 @@ int main(int argc, char* argv[]) {
   texture[1] = LoadTexBMP("./src/textures/whitewash.bmp");
   texture[2] = LoadTexBMP("./src/textures/grass.bmp");
   texture[3] = LoadTexBMP("./src/textures/grass_blade.bmp");
+  texture[4] = LoadTexBMP("./src/textures/sky.bmp");
   // Pass control to GLUT so it can interact with the user
   ErrCheck("init");
   glutMainLoop();

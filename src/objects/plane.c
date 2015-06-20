@@ -30,16 +30,16 @@ void plane(double x,double y,double z,
   // Centered around origin, then transform
   glNormal3d(0,1,0);
   glVertex3f(+1,0,+1);
-  glTexCoord2d(dim,dim);
+  glTexCoord2d(dim,0);
 
   glVertex3f(-1,0,+1);
-  glTexCoord2d(0,dim);
-
-  glVertex3f(-1,0,-1);
   glTexCoord2d(0,0);
 
+  glVertex3f(-1,0,-1);
+  glTexCoord2d(0,dim);
+
   glVertex3f(+1,0,-1);
-  glTexCoord2d(dim,0);
+  glTexCoord2d(dim,dim);
 
   // End
   glEnd();

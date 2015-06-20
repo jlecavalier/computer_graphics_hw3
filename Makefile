@@ -7,8 +7,8 @@ all: $(EXE)
 # Variables for readability
 AUX=src/auxiliary/
 OBJ=src/objects/
-AUXLIB=$(AUX)print.o $(AUX)project.o $(AUX)params.o $(AUX)loadtexbmp.o $(AUX)errcheck.o $(AUX)fatal.o $(AUX)vertex.o
-OBJLIB=$(OBJ)cube.o $(OBJ)axes.o $(OBJ)plane.o $(OBJ)grass_blade.o $(OBJ)grass_block.o $(OBJ)fencepost.o $(OBJ)fence.o $(OBJ)moon.o
+AUXLIB=$(AUX)print.o $(AUX)project.o $(AUX)params.o $(AUX)loadtexbmp.o $(AUX)errcheck.o $(AUX)fatal.o $(AUX)vertex.o $(AUX)lighting.o
+OBJLIB=$(OBJ)cube.o $(OBJ)axes.o $(OBJ)plane.o $(OBJ)grass_blade.o $(OBJ)grass_block.o $(OBJ)fencepost.o $(OBJ)fence.o $(OBJ)moon.o $(OBJ)sky.o
 
 #  MinGW
 ifeq "$(OS)" "Windows_NT"
@@ -38,6 +38,7 @@ src/auxiliary/loadtexbmp.o: $(AUX)loadtexbmp.c src/hw3_defs.h
 src/auxiliary/errcheck.o: $(AUX)errcheck.c src/hw3_defs.h
 src/auxiliary/fatal.o: $(AUX)fatal.c src/hw3_defs.h
 src/auxiliary/vertex.o: $(AUX)vertex.c src/hw3_defs.h
+src/auxiliary/lighting.o: $(AUX)lighting.c src/hw3_defs.h
 src/objects/cube.o: $(OBJ)cube.c src/hw3_defs.h
 src/objects/axes.o: $(OBJ)axes.c src/hw3_defs.h
 src/objects/plane.o: $(OBJ)plane.c src/hw3_defs.h
@@ -46,6 +47,7 @@ src/objects/grass_block.o: $(OBJ)grass_block.c src/hw3_defs.h
 src/objects/fencepost.o: $(OBJ)fencepost.c src/hw3_defs.h
 src/objects/fence.o: $(OBJ)fence.c src/hw3_defs.h
 src/objects/moon.o: $(OBJ)moon.c src/hw3_defs.h
+src/objects/sky.o: $(OBJ)sky.c src/hw3_defs.h
 
 # Create archives
 src/hw3_defs.a:$(AUXLIB) $(OBJLIB)
