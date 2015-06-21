@@ -2,7 +2,7 @@ Computer Graphics HW3
 BY: JAY LECAVALIER
 START DATE: 6/16/15
 MODIFIED: 6/16/15
-HOURS SPENT: 9
+HOURS SPENT: 10
 
 CONTENTS:
 1. Description
@@ -16,11 +16,8 @@ This program allows the user to explore a 3D backyard, including
 a field of grass, a fence, and the moon in the night sky. The user
 can walk around in this backyard and look around at any angle desired.
 
-This program features two viewing modes: orthogonal and perspective.
-In perspective mode, the user has a 'first person' view of the world,
-and can walk around and look wherever he/she desires. In orthogonal
-mode, the user looks at the world from a bird's eye view, and is 
-able to change the viewing angle only.
+Each of the objects has a texture and lighting applied to it (including
+each individual blade of grass!).
 
 /%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%/%
 
@@ -36,11 +33,7 @@ To clean up afterwards, type 'make clean'.
 
 3. Key bindings
 
-'m'				Switch between orthogonal/perspective modes.
 F1				Debug mode (shows axes and parameters on screen).
-
-ORTHOGONAL MODE ONLY:
-arrow keys		Change viewing angle
 
 PERSPECTIVE MODE ONLY:
 'w'				Walk forwards
