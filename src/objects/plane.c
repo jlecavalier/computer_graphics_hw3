@@ -12,8 +12,11 @@ void plane(double x,double y,double z,
 	      double dim,
 	      double thx,double thy,double thz,
         unsigned int tex) {
+  // Grassy material
   float Diffuse[] = {(36.0/255.0),(150.0/255.0),(70.0/255.0)};
+  float Emission[] = {122.0/(255.0*4.0),230.0/(255.0*4.0),206.0/(255.0*4.0)};
   glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
   // Save transformation
   glPushMatrix();
   // Texture

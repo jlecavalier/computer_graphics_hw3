@@ -4,6 +4,11 @@ void grass_blade(double x,double y,double z,
 	             double dx,double dy,double dz,
 	             double th,
                unsigned int tex) {
+  // Grass blade materials
+  float Diffuse[] = {(122.0/255.0),(230.0/255.0),(206.0/255.0)};
+  float Emission[] = {122.0/(255.0*4.0),230.0/(255.0*2.0),206.0/(255.0*3.0)};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
   // Save transformation
   glPushMatrix();
   // Texture

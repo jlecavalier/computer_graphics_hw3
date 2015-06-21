@@ -31,7 +31,8 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 	        float fx, float fy, float fz,
 	        float rx, float ry, float rz,
 	        double ambient,double diffuse,double specular,
-	        double moon_emission,float moon_shininess);
+	        double moon_emission,float moon_shininess,
+	        int grass_light);
 unsigned int LoadTexBMP(const char* file);
 void ErrCheck(const char* where);
 void Fatal(const char* format , ...);

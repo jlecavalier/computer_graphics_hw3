@@ -6,7 +6,8 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 	        float fx, float fy, float fz,
 	        float rx, float ry, float rz,
 	        double ambient,double diffuse,double specular,
-	        double moon_emission,float moon_shininess) {
+	        double moon_emission,float moon_shininess,
+	        int grass_light) {
   glColor3f(1,1,1);
   if (!mode) {
   	glColor3f(0,0,0);
@@ -32,5 +33,9 @@ void Params(int th,int ph,int mode,double l_theta,double l_phi,
 	Print("Lighting:%.0f, %.0f, %.0f",ambient,diffuse,specular);
 	glWindowPos2i(5,125);
 	Print("Moon emission, shininess:%.0f, %.0f",moon_emission,moon_shininess);
+	if (grass_light) {
+		glWindowPos2i(5,140);
+		Print("GRASS LIGHT ON");
+	}
   }
 }

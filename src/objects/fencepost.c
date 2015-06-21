@@ -4,7 +4,7 @@ void fencepost(double x,double y,double z,
 	           double dx,double dy,double dz) {
   // Fence materials
   float white[] = {1.0,1.0,1.0,1.0};
-  float Diffuse[] = {1.0,1.0,0.0};
+  float Diffuse[] = {1.0,1.0,0.9};
   glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
   glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
   // Save transformation

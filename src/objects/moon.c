@@ -8,8 +8,8 @@ void moon(double x,double y,double z,double r,
   int th,ph;
 
   // Set specular color to white
-  float white[] = {.78,.78,.78,1};
-  float Emission[] = {0.0,0.0,0.01*moon_emission};
+  float white[] = {.78,.78,.78};
+  float Emission[] = {0.01*moon_emission,0.01*moon_emission,0.01*moon_emission};
   float Diffuse[] = {.85,.85,.85};
   glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,moon_shinyvec);
   glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);

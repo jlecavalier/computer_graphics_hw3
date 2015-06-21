@@ -29,12 +29,13 @@ double th_mat[7][7];
 unsigned int texture[5];
 
 // Lighting stuff
-double ambient=55;
-double diffuse=-65;
+double ambient=35;
+double diffuse=5;
 double specular=6.75;
-double moon_emission=55;
+double moon_emission=50;
 float moon_shininess = 1.25;
 float moon_shinyvec[1];
+int grass_light = 0;
 
 void display() {
   glClearColor(4.0/255.0,12.0/255.0,31.0/255.0,1);
@@ -92,20 +93,12 @@ void display() {
     fence(7,0,k,-90,texture[1]);
   }
 
-  // The moon!
-  /*
-  moon(12,12,12,2,
-       0,moon_zh,0,
-       texture[0],
-       moon_emission,moon_shinyvec);
-       */
-
-  glDisable(GL_LIGHTING);
-
   // The sky!
   sky(0,0,0,20,
     -90,0,0,
     texture[4]);
+
+  glDisable(GL_LIGHTING);
 
   // Display axes and params in debug mode
   if(debug) {
@@ -118,7 +111,8 @@ void display() {
            mat[2],mat[6],mat[10],
            mat[0],mat[4],mat[8],
            ambient,diffuse,specular,
-           moon_emission,moon_shininess);
+           moon_emission,moon_shininess,
+           grass_light);
   }
 
   glFlush();
@@ -157,50 +151,14 @@ void key(unsigned char ch,int x,int y) {
     cam_x += (mat[0])/2.0;
     cam_z += (mat[8])/2.0;
   }
-  else if (ch == 'y') {
-    ambient -= 5;
-  }
-  else if (ch == 'u') {
-    ambient += 5;
-  }
-  else if (ch == 'h') {
-    diffuse -= 5;
-  }
-  else if (ch == 'j') {
-    diffuse += 5;
-  }
-  else if (ch == 'b') {
-    specular -= 5;
-  }
-  else if (ch == 'n') {
-    specular += 5;
-  }
-  else if (ch == '[') {
-    moon_emission -= 5;
-  }
-  else if (ch == ']') {
-    moon_emission += 5;
-  }
-  else if (ch == '{') {
-    moon_shininess -= 1;
-  }
-  else if (ch == '}') {
-    moon_shininess += 1;
-  }
-
   // Translate shininess power to value
   moon_shinyvec[0] = moon_shininess<0 ? 0 : pow(2.0,moon_shininess);
-
-
-  // Keep light bounded
-  if (ambient > 100) {ambient = 100;}
-  if (ambient < 0) {ambient = 0;}
   
   // Don't let the user walk through the fence!
   if (cam_x < -5.3) {cam_x = -5.3;}
   if (cam_x > 5.3) {cam_x = 5.3;}
   if (cam_z > 5.3) {cam_z = 5.3;}
-  if (cam_z < -5.3) {cam_z = 5.3;}
+  if (cam_z < -5.3) {cam_z = -5.3;}
   // We may have updated the projection mode, so reproject
   Project(fov,asp,dim,mode);
   // Redisplay
