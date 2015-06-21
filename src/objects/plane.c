@@ -12,6 +12,8 @@ void plane(double x,double y,double z,
 	      double dim,
 	      double thx,double thy,double thz,
         unsigned int tex) {
+  float Diffuse[] = {(36.0/255.0),(150.0/255.0),(70.0/255.0)};
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
   // Save transformation
   glPushMatrix();
   // Texture
