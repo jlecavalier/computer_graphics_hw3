@@ -12,9 +12,9 @@ void lighting(float ambient,float diffuse,float specular,
   float Specular[] = {0.01*specular ,0.01*specular ,0.01*specular};
   glShadeModel(GL_SMOOTH);
   // Light direction
-  float Position[] = {Cos(moon_y),2,Sin(moon_y)};
+  float Position[] = {8.0*Cos(moon_zh),8.0*Sin(moon_zh),0};
   // The moon is the light source
-  moon(5.0*Cos(moon_y),2,5.0*Sin(moon_y),.9,
+  moon(8.0*Cos(moon_zh),8.0*Sin(moon_zh),0,.9,
        0,moon_zh,0,
        tex,
        moon_emission,moon_shinyvec);

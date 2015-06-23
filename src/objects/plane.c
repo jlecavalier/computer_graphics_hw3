@@ -27,9 +27,10 @@ void plane(double x,double y,double z,
   glRotated(thz,0,0,1);
   glScaled(dim,1,dim);
   // Plane
+  glColor3f(0,0,0);
   glBegin(GL_QUADS);
   // Color specified by user
-  glColor3f(r,g,b);
+  //glColor3f(r,g,b);
   // Centered around origin, then transform
   glNormal3d(0,1,0);
   glVertex3f(+1,0,+1);

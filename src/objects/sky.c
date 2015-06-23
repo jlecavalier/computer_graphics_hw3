@@ -25,7 +25,7 @@ void sky(double x,double y,double z,double r,
 
   // Latitude bands
   for (ph=0;ph<90;ph+=d) {
-  	glColor3f(1,1,1);
+  	glColor3f(0,0,0);
   	glBegin(GL_QUAD_STRIP);
   	for (th=0;th<=360;th+=d) {
   		Vertex(th,ph,0);

@@ -24,8 +24,8 @@ extern "C" {
 
 // AUXILIARY
 void Print(const char* format , ...);
-void Project(int fov,double asp,double dim,int mode);
-void Params(int th,int ph,int mode,double l_theta,double l_phi,
+void Project(int fov,double asp,double dim);
+void Params(double l_theta,double l_phi,
 	        double lookat_x,double lookat_y,double lookat_z,
 	        double cam_x,double cam_z,
 	        float fx, float fy, float fz,

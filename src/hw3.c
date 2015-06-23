@@ -2,9 +2,6 @@
 
 // Global Vars
 int debug=0; // Debug mode
-int mode=1; // projection mode
-int th=0; // Azimuth of view angle
-int ph=5; // Elevation of view angle
 int fov=55; // Field of view (perspective mode)
 double asp=1; // Aspect ratio
 double dim=5.0; // Size of the world
@@ -39,6 +36,7 @@ int grass_light = 0;
 double moon_y=1;
 
 void display() {
+  Project(fov,asp,dim);
   glClearColor(4.0/255.0,12.0/255.0,31.0/255.0,1);
   // Erase the window and the depth buffer
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -47,22 +45,15 @@ void display() {
   // Undo transforms
   glLoadIdentity();
 
+  moon_shinyvec[0] = moon_shininess<0 ? 0 : pow(2.0,moon_shininess);
+
   // Perspective - set eye position
-  if (mode) {
-    // Calculate where to point the camera.
-    lookat_x = (cam_x + (double)Sin(l_theta));
-    lookat_y = (Sin(l_phi));
-    lookat_z = (cam_z - Cos(l_theta));
-    // Point the camera
-    gluLookAt(cam_x,0.2,cam_z , lookat_x,lookat_y,lookat_z , 0,1,0);
-  }
-  // Orthogonal - set world orientation
-  else {
-    glTranslated(0,0,0);
-    glRotatef(ph,1,0,0);
-    glRotatef(th,0,1,0);
-    glScaled(1,1,1);
-  }
+  // Calculate where to point the camera.
+  lookat_x = (cam_x + (double)Sin(l_theta));
+  lookat_y = (Sin(l_phi));
+  lookat_z = (cam_z - Cos(l_theta));
+  // Point the camera
+  gluLookAt(cam_x,0.2,cam_z , lookat_x,lookat_y,lookat_z , 0,1,0);
 
   // Lighting!
   lighting(ambient,diffuse,specular,
@@ -107,7 +98,7 @@ void display() {
     axes(1);
     float mat[16];
     glGetFloatv(GL_MODELVIEW_MATRIX, mat);
-    Params(th,ph,mode,l_theta,l_phi,
+    Params(l_theta,l_phi,
            lookat_x,lookat_y,lookat_z,
            cam_x,cam_z,
            mat[2],mat[6],mat[10],
@@ -128,9 +119,6 @@ void key(unsigned char ch,int x,int y) {
   // Exit when the user presses ESC
   if (ch == 27) {
     exit(0);
-  }
-  else if (ch == 'm') {
-    mode = 1 - mode;
   }
   // 'w' to walk forward
   else if (ch == 'w') {
@@ -153,43 +141,9 @@ void key(unsigned char ch,int x,int y) {
     cam_x += (mat[0])/2.0;
     cam_z += (mat[8])/2.0;
   }
-  else if (ch == 'y') {
-    ambient -= 5;
-  }
-  else if (ch == 'u') {
-    ambient += 5;
-  }
-  else if (ch == 'h') {
-    diffuse -= 5;
-  }
-  else if (ch == 'j') {
-    diffuse += 5;
-  }
-  else if (ch == 'b') {
-    specular -= 5;
-  }
-  else if (ch == 'n') {
-    specular += 5;
-  }
-  else if (ch == '[') {
-    moon_emission -= 5;
-  }
-  else if (ch == ']') {
-    moon_emission += 5;
-  }
-  else if (ch == '{') {
-    moon_shininess -= 1;
-  }
-  else if (ch == '}') {
-    moon_shininess += 1;
-  }
 
   // Translate shininess power to value
   moon_shinyvec[0] = moon_shininess<0 ? 0 : pow(2.0,moon_shininess);
-
-  // Keep light bounded
-  if (ambient > 100) {ambient = 100;}
-  if (ambient < 0) {ambient = 0;}
   
   // Don't let the user walk through the fence!
   if (cam_x < -5.3) {cam_x = -5.3;}
@@ -197,7 +151,7 @@ void key(unsigned char ch,int x,int y) {
   if (cam_z > 5.3) {cam_z = 5.3;}
   if (cam_z < -5.3) {cam_z = -5.3;}
   // We may have updated the projection mode, so reproject
-  Project(fov,asp,dim,mode);
+  Project(fov,asp,dim);
   // Redisplay
   glutPostRedisplay();
 }
@@ -211,36 +165,16 @@ void reshape(int width,int height) {
   // Set the viewport to the entire window
   glViewport(0,0,width,height);
   // Set the projection accordingly
-  Project(fov,asp,dim,mode);
+  Project(fov,asp,dim);
 }
 
 void special(int key,int x,int y) {
-  if (key == GLUT_KEY_RIGHT) {
-    th += 5;
-  }
-  else if (key == GLUT_KEY_LEFT) {
-    th -= 5;
-  }
-  else if (key == GLUT_KEY_UP) {
-    moon_y += 1;
-  }
-  else if (key == GLUT_KEY_DOWN) {
-    moon_y -= 1;
-  }
-
   // F1 to switch to debug mode
-  else if (key == GLUT_KEY_F1) {
+  if (key == GLUT_KEY_F1) {
     debug = 1 - debug;
   }
-
-  // Angles are in degrees!
-  th %= 360;
-  ph %= 360;
-  if (ph < 5) {ph = 5;}
-  if (ph > 45) {ph = 45;}
-
   // We need to update the projection
-  Project(fov,asp,dim,mode);
+  Project(fov,asp,dim);
   // We updated what the image looks like. Redisplay!
   glutPostRedisplay();
 }
@@ -259,12 +193,12 @@ void passive_mouse(int x, int y) {
     l_phi = (y_prime*(90/win_height))-11;
   }
   glLoadIdentity();
-  Project(fov,asp,dim,mode);
+  Project(fov,asp,dim);
   glutPostRedisplay();
 }
 
 void idle() {
-  moon_zh = 3*glutGet(GLUT_ELAPSED_TIME)/1000.0;
+  moon_zh = 5*glutGet(GLUT_ELAPSED_TIME)/1000.0;
   glutPostRedisplay();
 }
 
@@ -278,8 +212,7 @@ int main(int argc, char* argv[]) {
   for (i=0;i<7;i++) {
     for (j=0;j<7;j++) {
       dx_mat[i][j] = (drand48()*.013)+.001;
-      //th_mat[i][j] = ((double)rand()/360);
-      th_mat[i][j] = 0;
+      th_mat[i][j] = ((double)rand()/360);
     }
   }
   // Initialize GLUT

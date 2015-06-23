@@ -29,20 +29,26 @@ void grass_blade(double x,double y,double z,
   	glColor3f(r,g,b);
   	float cosi = cos(i);
   	float z_pos = pow((mpi6+i)/1.5,2);
+    float y_norm = -(.001*((2*cosi)-1));
+    float z_norm = .01*((2*cosi)-1);
 
-    glNormal3d(z_pos,z_pos,-z_pos);
+    //glNormal3d(z_pos,z_pos,-z_pos);
+    glNormal3d(0,y_norm,-z_norm);
     glTexCoord2d((cosi)/mpi3,(i+mpi6)/(mpi3+mpi6));
   	glVertex3f(cosi,i+mpi6,z_pos);
 
-    glNormal3d(z_pos,z_pos,-z_pos);
+    //glNormal3d(z_pos,z_pos,-z_pos);
+    glNormal3d(0,y_norm,-z_norm);
     glTexCoord2d((1-cosi)/mpi3,(i+mpi6)/(mpi3+mpi6));
   	glVertex3f(1-cosi,i+mpi6,z_pos);
 
-    glNormal3d(z_pos+.001,z_pos+.001,-(z_pos+.001));
+    //glNormal3d(z_pos+.001,z_pos+.001,-(z_pos+.001));
+    glNormal3d(0,y_norm,-z_norm);
     glTexCoord2d((cosi)/mpi3,(i+.01+mpi6)/(mpi3+mpi6));
   	glVertex3f(cosi,i+.01+mpi6,z_pos+.001);
 
-    glNormal3d(z_pos+.001,z_pos+.001,-(z_pos+.001));
+    //glNormal3d(z_pos+.001,z_pos+.001,-(z_pos+.001));
+    glNormal3d(0,y_norm,-z_norm);
     glTexCoord2d((1-cosi)/mpi3,(i+.01+mpi6)/(mpi3+mpi6));
   	glVertex3f(1-cosi,i+.01+mpi6,z_pos+.001);
 
