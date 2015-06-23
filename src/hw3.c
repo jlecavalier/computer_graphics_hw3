@@ -29,13 +29,14 @@ double th_mat[7][7];
 unsigned int texture[5];
 
 // Lighting stuff
-double ambient=35;
-double diffuse=5;
-double specular=6.75;
+double ambient=0;
+double diffuse=7;
+double specular=72.75;
 double moon_emission=50;
 float moon_shininess = 1.25;
 float moon_shinyvec[1];
 int grass_light = 0;
+double moon_y=1;
 
 void display() {
   glClearColor(4.0/255.0,12.0/255.0,31.0/255.0,1);
@@ -66,7 +67,8 @@ void display() {
   // Lighting!
   lighting(ambient,diffuse,specular,
            moon_zh, texture[0],
-           moon_emission,moon_shinyvec);
+           moon_emission,moon_shinyvec,
+           moon_y);
 
   // A grassy plane
   plane(0,0,5, 
@@ -87,8 +89,8 @@ void display() {
   // Fences around the whole yard.
   double k;
   for (k=-7;k<=7;k+=.5) {
-    fence(k,0,-7,180,texture[1]);
-    fence(-7,0,k,-90,texture[1]);
+    fence(k,0,-7,0,texture[1]);
+    fence(-7,0,k,90,texture[1]);
     fence(k,0,7,180,texture[1]);
     fence(7,0,k,-90,texture[1]);
   }
@@ -151,8 +153,43 @@ void key(unsigned char ch,int x,int y) {
     cam_x += (mat[0])/2.0;
     cam_z += (mat[8])/2.0;
   }
+  else if (ch == 'y') {
+    ambient -= 5;
+  }
+  else if (ch == 'u') {
+    ambient += 5;
+  }
+  else if (ch == 'h') {
+    diffuse -= 5;
+  }
+  else if (ch == 'j') {
+    diffuse += 5;
+  }
+  else if (ch == 'b') {
+    specular -= 5;
+  }
+  else if (ch == 'n') {
+    specular += 5;
+  }
+  else if (ch == '[') {
+    moon_emission -= 5;
+  }
+  else if (ch == ']') {
+    moon_emission += 5;
+  }
+  else if (ch == '{') {
+    moon_shininess -= 1;
+  }
+  else if (ch == '}') {
+    moon_shininess += 1;
+  }
+
   // Translate shininess power to value
   moon_shinyvec[0] = moon_shininess<0 ? 0 : pow(2.0,moon_shininess);
+
+  // Keep light bounded
+  if (ambient > 100) {ambient = 100;}
+  if (ambient < 0) {ambient = 0;}
   
   // Don't let the user walk through the fence!
   if (cam_x < -5.3) {cam_x = -5.3;}
@@ -185,10 +222,10 @@ void special(int key,int x,int y) {
     th -= 5;
   }
   else if (key == GLUT_KEY_UP) {
-    ph += 5;
+    moon_y += 1;
   }
   else if (key == GLUT_KEY_DOWN) {
-    ph -= 5;
+    moon_y -= 1;
   }
 
   // F1 to switch to debug mode
@@ -241,7 +278,8 @@ int main(int argc, char* argv[]) {
   for (i=0;i<7;i++) {
     for (j=0;j<7;j++) {
       dx_mat[i][j] = (drand48()*.013)+.001;
-      th_mat[i][j] = ((double)rand()/360);
+      //th_mat[i][j] = ((double)rand()/360);
+      th_mat[i][j] = 0;
     }
   }
   // Initialize GLUT

@@ -2,17 +2,19 @@
 
 void lighting(float ambient,float diffuse,float specular,
 	          double moon_zh,unsigned int tex,
-	          double moon_emission,float moon_shinyvec[1]) {
+	          double moon_emission,float moon_shinyvec[1],
+            double moon_y) {
   glEnable(GL_NORMALIZE);
 
   // Translate intensity to color vectors
   float Ambient[] = {0.01*ambient ,0.01*ambient ,0.01*ambient};
   float Diffuse[] = {0.01*diffuse ,0.01*diffuse ,0.01*diffuse};
   float Specular[] = {0.01*specular ,0.01*specular ,0.01*specular};
+  glShadeModel(GL_SMOOTH);
   // Light direction
-  float Position[] = {12,12,12};
+  float Position[] = {Cos(moon_y),2,Sin(moon_y)};
   // The moon is the light source
-  moon(12,12,12,1.5,
+  moon(5.0*Cos(moon_y),2,5.0*Sin(moon_y),.9,
        0,moon_zh,0,
        tex,
        moon_emission,moon_shinyvec);
@@ -30,4 +32,8 @@ void lighting(float ambient,float diffuse,float specular,
   glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
   glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
   glLightfv(GL_LIGHT0,GL_POSITION,Position);
+  // The material of the light
+  glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,Specular);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,Ambient);
+  glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,Diffuse);
 }

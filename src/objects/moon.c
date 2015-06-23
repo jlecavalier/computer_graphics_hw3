@@ -1,6 +1,6 @@
 #include "../hw3_defs.h"
 
-void moon(double x,double y,double z,double r,
+void moon(float x,float y,float z,double r,
 	      double thx,double thy,double thz,
         unsigned int tex,
         double moon_emission, float moon_shinyvec[1]) {

@@ -39,7 +39,8 @@ void Fatal(const char* format , ...);
 void Vertex(int th,int ph,int out);
 void lighting(float ambient,float diffuse,float specular,
 	          double moon_zh,unsigned int tex,
-	          double moon_emission,float moon_shinyvec[1]);
+	          double moon_emission,float moon_shinyvec[1],
+	          double moon_y);
 
 // OBJECTS
 void cube(double x,double y,double z,
@@ -61,7 +62,7 @@ void grass_block(double x,double y,double z,
 void fencepost(double x,double y,double z,
 	           double dx,double dy,double dz);
 void fence(double x,double y,double z,double th,unsigned int tex);
-void moon(double x,double y,double z,double r,
+void moon(float x,float y,float z,double r,
 	      double thx,double thy,double thz,
 	      unsigned int tex,
 	      double moon_emission,float moon_shinyvec[1]);
